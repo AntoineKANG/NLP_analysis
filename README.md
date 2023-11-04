@@ -2,6 +2,13 @@
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
+- [Code Structure](#code-structure)
+- [Results](#results)
+- [Machine Learning](#machine-learning)
+- [Deep Learning](#deep-learning)
+- [Final Results](#final-results)
+- [Conclusion](#conclusion)
+- [Author](#author)
 
 ## About Dataset
 link to kaggle: https://www.kaggle.com/datasets/joebeachcapital/restaurant-reviews/data
@@ -94,4 +101,66 @@ NLP_analysis/
 
 Due to the uneven distribution of data between categories, the main metric is not known to be accuracy, but also the value of the recall rate of category 2 and the overall f1 in the results need to be considered.
 
+## Machine Learning
 
+### Experiment and result
+- **Techniques Employed**: To counter the class imbalance, techniques like `class_weight`.
+- **Model Employed**: The model that yielded the best results is a text classifier based on Logistic Regression with a `TfidfVectorizer` as a vectorizer.
+    ```python
+    classifier = TextClassifier(
+        model=LogisticRegression(
+            max_iter=1000, 
+            class_weight='balanced', 
+            penalty='l2', 
+            C=1, 
+        ), 
+        vectorizer=TfidfVectorizer(
+            max_features=5000, 
+            stop_words='english'
+        )
+    )
+    ```
+- **Results**: 
+    - Accuracy: 59.08%
+    - Recall for Class 2: 33%
+    - Global F1 Score: 51% (macro avg)
+
+## Deep Learning
+Turning to deep learning reveals an overfitting problem that is exacerbated by a lack of data.
+### Experiment and result
+- A sequential model with an embedding layer, 1D convolutional layer with L2 regularization, global max pooling, and a dense layer with L2 regularization was employed.
+
+    ```python
+    model = Sequential([
+        Embedding(MAX_VOCAB_SIZE, EMBEDDING_DIM,     input_length=MAX_SEQUENCE_LENGTH),
+        Conv1D(128, 5, activation='relu', kernel_regularizer=l2(0.01)),
+        GlobalMaxPooling1D(),
+        Dense(5, activation='softmax', kernel_regularizer=l2(0.01))
+    ])
+    ```
+- **Results**: 
+    - Accuracy: 55%
+    - Recall for Class 2: 42%
+    - Global F1 Score: 48% (macro avg)
+![image](https://github.com/AntoineKANG/NLP_analysis/blob/main/assets/output2.png?raw=true)
+The curve is not very satisfactory. The reason is that there is too little data.
+
+## Final Results
+### Remapping
+In order to simplify the problem and get better results, I will consider negative and positive(Selection based on the amount of data), I do the following class remapping:
+```python
+mapping = {1: 'negative/bad', 2: 'negative/bad', 3: 'negative/bad', 4: 'positive/good', 5: 'positive/good'}
+```
+
+- **Results with Remapping**:
+    - Accuracy: 86.46%
+    - Recall for 'negative' category:  75%
+    - Global F1 Score: 85% (macro avg)
+ 
+  The model also gives good results after remapping
+
+## Conclusion
+Class remapping leads to better results in terms of class recall of interest, global F1 scores, and accuracy. In this case, the main reason is due to the lack of data, and there are only two classes after remapping, which simplifies the complexity of the problem and makes it easier for the model to train and predict.
+
+## Author
+- Zhuodong KANG(zhuodong.kang@epfedu.fr)
