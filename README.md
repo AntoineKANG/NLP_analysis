@@ -145,6 +145,18 @@ Turning to deep learning reveals an overfitting problem that is exacerbated by a
 ![image](https://github.com/AntoineKANG/NLP_analysis/blob/main/assets/output2.png?raw=true)
 The curve is not very satisfactory. The reason is that there is too little data.
 
+
+| Model                             | Accuracy (%) | Macro F1-score (%) | Recall for Class 2 (%) | Number of training epochs |
+|-----------------------------------|--------------|--------------------|-------------------------|---------------------------|
+| Baseline(LSTM)                          | 56.99        | 40                 | 0                      | 20                        |
+| Baseline(LSTM)(class weights)                         | 53.52           | 46                 | 37                      | 10                        |
+| Conv1D + GlobalMaxPooling1D(No Regularization)(class weights) | 60.52        | 54                 | 32                      | 10                         |
+| **Conv1D + GlobalMaxPooling1D(With L2 Regularization)(class weights)**         | **55**       | **48**             | **42**                  | **10**                    |
+| Bi-LSTM with Dropout(No Regularization)(class weights) | 56.99        | 51                 | 48                      | 10        |
+| Bi-LSTM with Dropout(With L2 Regularization)(class weights) | 49.38        | 46                 | 33                      | 10        |
+
+After comprehensive consideration of several models, I think Conv1D + GlobalMaxPooling1D(With L2 Regularization)(class weights) is my best model. Although its accuracy (0.55) is not as good as that of the first additional model (0.6), its curve fit is better, indicating better generalization and higher confidence. The last model Bi-LSTM with Dropout(With L2 Regularization)(class weights), although the curves are better, has lower values, so I didn't end up choosing it as my best model.
+
 ## Final Results
 ### Remapping
 In order to simplify the problem and get better results, I will consider negative and positive(Selection based on the amount of data), I do the following class remapping:
