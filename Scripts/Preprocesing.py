@@ -148,8 +148,8 @@ pipeline = Pipeline([
     
 ])
 
-# if __name__ == "__main__":
-#     df = pd.read_csv("../data/Restaurant reviews.csv")
-#     # df["cleaned_text"] = df.text.apply(lambda x: pipeline(x))
-#     df["cleaned_text"] = pipeline.transform(df["Review"].values) 
-#     df.to_csv("cleaned_spellings_Restaurant_reviews.csv")
+if __name__ == "__main__":
+    df = pd.read_csv("../data/Restaurant reviews.csv")
+    # df["cleaned_text"] = df.text.apply(lambda x: pipeline(x))
+    df["cleaned_text"] = pipeline.transform(df["Review"].values) 
+    df.to_csv("cleaned_spellings_Restaurant_reviews.csv")
