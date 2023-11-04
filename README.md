@@ -145,7 +145,7 @@ Turning to deep learning reveals an overfitting problem that is exacerbated by a
 ![image](https://github.com/AntoineKANG/NLP_analysis/blob/main/assets/output2.png?raw=true)
 The curve is not very satisfactory. The reason is that there is too little data.
 
-
+### Result for deep learning
 | Model                             | Accuracy (%) | Macro F1-score (%) | Recall for Class 2 (%) | Number of training epochs |
 |-----------------------------------|--------------|--------------------|-------------------------|---------------------------|
 | Baseline(LSTM)                          | 56.99        | 40                 | 0                      | 20                        |
